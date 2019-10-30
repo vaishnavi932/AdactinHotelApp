@@ -7,12 +7,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class Baseclass
+public class BaseClass 
 {
-	public static webdriver driver;
-	
+	public static WebDriver driver;
+
 	public static WebDriver getDriver(String browsername) throws Exception 
 	{
 		try {
@@ -32,7 +33,7 @@ public class Baseclass
 		catch (Exception e) 
 		{
 					throw new Exception("Invalid");
-
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
 		}
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -71,6 +72,7 @@ public class Baseclass
 
 	}
 	
+	
 	public static void getText(WebElement element) {
 		try {
 			System.out.println(element.getText());
@@ -80,12 +82,17 @@ public class Baseclass
 
 	}
 	public static void click(WebElement element)
-	{
-		element.click();
+	{	
+		try
+		{
+			element.click();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
-
-
+	
 	public static void getAttribute(WebElement element) {
 		try {
 			String attribute = element.getAttribute("Value");
@@ -150,5 +157,26 @@ public class Baseclass
 		}
 		return selected;
 	}
-
+	
+	public static void dropdown(WebElement element, String type, String i) {
+		try {
+			System.out.println("i am  select by value and text");
+			driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+			Select sc = new Select(element);
+			if (type.equalsIgnoreCase("index")) {
+				sc.selectByIndex(Integer.parseInt(i));
+			}
+		  if (type.equalsIgnoreCase("value")) {
+				sc.selectByValue(i);
+			} else if (type.equalsIgnoreCase("text")) {
+				sc.selectByVisibleText(i);
+			}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
+	
+	}
+	
+	
 }
+//1. does each scenario refer to each class
